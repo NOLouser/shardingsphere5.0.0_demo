@@ -2,7 +2,7 @@
 
 ### Steps to reproduce the bug
 1. use month_ds.sql init mysql databases
-2. change DataSourceConfig.java database username and password
+2. change shardingsphere.yml database username and password
 3. run method #selectCountWithHint() in ApplicationTests.java
 
 

@@ -1,15 +1,25 @@
+# 配置真实数据源
+dataSources:
+  # 配置第 1 个数据源
+  ds:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/month_ds?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+
 rules:
   # 分片配置
   - !SHARDING
     tables:
       t_order:
-        actualDataNodes: ds.t_order_${2021}0${1..9}, ds.t_order_${2021}${10..12}
+        actualDataNodes: ds.t_order_${2021..2022}0${1..9}, ds.t_order_${2021..2022}${10..12}
         tableStrategy:
           standard:
             shardingColumn: order_id
             shardingAlgorithmName: monthTableShardingAlgorithm
       t_order_hint:
-        actualDataNodes: ds.t_order_${2021}0${1..9}, ds.t_order_${2021}${10..12}
+        actualDataNodes: ds.t_order_${2021..2022}0${1..9}, ds.t_order_${2021..2022}${10..12}
         tableStrategy:
           hint:
             shardingAlgorithmName: hintMonthTableShardingAlgorithm
@@ -20,7 +30,7 @@ rules:
         props: {}
       hintMonthTableShardingAlgorithm:
         type: CLASS_BASED_HINT
-        props: { }
+        props: {}
 
 # 全局配置
 props:
