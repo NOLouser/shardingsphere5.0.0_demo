@@ -1,0 +1,32 @@
+rules:
+  # 分片配置
+  - !SHARDING
+    tables:
+      t_order:
+        actualDataNodes: ds.t_order_${2021}0${1..9}, ds.t_order_${2021}${10..12}
+        tableStrategy:
+          standard:
+            shardingColumn: order_id
+            shardingAlgorithmName: monthTableShardingAlgorithm
+      t_order_hint:
+        actualDataNodes: ds.t_order_${2021}0${1..9}, ds.t_order_${2021}${10..12}
+        tableStrategy:
+          hint:
+            shardingAlgorithmName: hintMonthTableShardingAlgorithm
+    # 分片算法配置
+    shardingAlgorithms:
+      monthTableShardingAlgorithm:
+        type: CLASS_BASED_MONTH
+        props: {}
+      hintMonthTableShardingAlgorithm:
+        type: CLASS_BASED_HINT
+        props: { }
+
+# 全局配置
+props:
+  # 输出路由日志
+  sql-show: true
+  # 检查元数据
+  check-table-metadata-enabled: false
+  # 一次查询请求在每个数据库实例中所能使用的最大连接数
+  max-connections-size-per-query: 36

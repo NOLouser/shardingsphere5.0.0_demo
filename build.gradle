@@ -1,0 +1,39 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.nolouser'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation "org.springframework.boot:spring-boot-starter-jdbc"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // 引入shardingsphere
+    implementation("org.apache.shardingsphere:shardingsphere-jdbc-core:5.0.0") {
+        exclude group: "org.apache.shardingsphere", module: "shardingsphere-sql-parser-oracle"
+        exclude group: "org.apache.shardingsphere", module: "shardingsphere-sql-parser-sqlserver"
+        exclude group: "org.apache.shardingsphere", module: "shardingsphere-shadow-core"
+        exclude group: "org.apache.shardingsphere", module: "shardingsphere-sql-parser-sql92"
+        exclude group: "org.apache.shardingsphere", module: "shardingsphere-sql-parser-postgresql"
+        exclude group: "org.apache.shardingsphere", module: "shardingsphere-db-discovery-core"
+    }
+
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.alibaba:druid:1.2.8'
+    implementation 'mysql:mysql-connector-java:8.0.27'
+
+}
+
+test {
+    useJUnitPlatform()
+}
